@@ -1,0 +1,42 @@
+syntax = "proto3";
+package mailing.v1;
+
+option go_package = "github.com/pbsilvab/mailing/proto";
+
+import "google/api/annotations.proto";
+
+service MailingService {
+    rpc Send(SendRequest) returns (SendResponse){
+        option (google.api.http) = {
+            post: "/v1/sendmail"
+            body: "*"
+        };
+    }
+}
+
+message From {
+    string email = 1;
+    string name = 2;
+    string username = 3;
+}
+
+message To {
+    string email = 1;
+    string name = 2;
+}
+
+message Body {
+    string data_type = 1;
+    string data = 2;
+}
+
+message SendRequest {
+    From from = 1;
+    To to = 2;
+    string subject = 3;
+    Body body = 4;
+}
+
+message SendResponse {
+    bool status = 1;
+}
